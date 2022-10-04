@@ -1,0 +1,31 @@
+<div>
+  <h1>Benvenuto {{ currentUser }}</h1>
+
+  <form [formGroup]="chatForm" (ngSubmit)="onSubmit()">
+    <div *ngFor="let message of chat">
+      <p>{{ message.username }}: {{ message.message }}</p>
+    </div>
+
+    <mat-form-field appearance="fill">
+      <input
+        matInput
+        type="text"
+        placeholder="enter a message..."
+        formControlName="messageInput"
+      />
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!chatForm.valid"
+    >
+      Send
+    </button>
+  </form>
+
+  <button mat-raised-button color="warn" type="submit" (click)="logout()">
+    Logout
+  </button>
+</div>

@@ -1,0 +1,31 @@
+<div>
+  <h1>Sign Up</h1>
+
+  <form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" name="email" ngModel required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput type="text" name="username" ngModel required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" name="password" ngModel required />
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!signupForm.valid"
+    >
+      Send
+    </button>
+
+    <h3>Already signed up? Go to <a routerLink="/login">Login</a></h3>
+  </form>
+</div>
