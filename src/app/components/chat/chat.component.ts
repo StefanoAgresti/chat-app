@@ -21,6 +21,7 @@ export class ChatComponent implements OnInit {
   chat: any[] = [];
   currentUser: any;
 
+  url: string = 'https://chat-44419-default-rtdb.firebaseio.com/message.json';
   ngOnInit(): void {
     this.chatForm = new FormGroup({
       messageInput: new FormControl('', Validators.required),
@@ -28,24 +29,19 @@ export class ChatComponent implements OnInit {
 
     this.currentUser = this.authService.user.displayName;
 
-    this.chatService
-      .getMessage('https://chat-44419-default-rtdb.firebaseio.com/message.json')
-      .subscribe((resMessage: any) => {
-        this.chat = Object.keys(resMessage).map((key) => {
-          return resMessage[key];
-        });
+    this.chatService.getMessage(this.url).subscribe((resMessage: any) => {
+      this.chat = Object.keys(resMessage).map((key) => {
+        return resMessage[key];
       });
+    });
   }
 
   onSubmit() {
     this.chatService
-      .sendMessage(
-        'https://chat-44419-default-rtdb.firebaseio.com/message.json',
-        {
-          message: this.chatForm.value.messageInput,
-          username: this.authService.user.displayName,
-        }
-      )
+      .sendMessage(this.url, {
+        message: this.chatForm.value.messageInput,
+        username: this.authService.user.displayName,
+      })
       .subscribe((res) => {
         console.log(res);
       });
