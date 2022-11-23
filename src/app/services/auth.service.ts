@@ -8,6 +8,12 @@ import { User } from '../models/user.model';
 })
 export class AuthService {
   user!: User;
+
+  signUpURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=';
+
+  signInURL =
+    'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=';
+
   constructor(private http: HttpClient) {}
 
   authStatus() {
@@ -29,28 +35,20 @@ export class AuthService {
   }
 
   signup(email: string, displayName: string, password: string) {
-    return this.http.post(
-      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
-        environment.firebaseConfig.apiKey,
-      {
-        email: email,
-        displayName: displayName,
-        password: password,
-        returnSecureToken: true,
-      }
-    );
+    return this.http.post(this.signUpURL + environment.firebaseConfig.apiKey, {
+      email: email,
+      displayName: displayName,
+      password: password,
+      returnSecureToken: true,
+    });
   }
 
   login(email: string, password: string) {
-    return this.http.post(
-      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
-        environment.firebaseConfig.apiKey,
-      {
-        email: email,
-        password: password,
-        returnSecureToken: true,
-      }
-    );
+    return this.http.post(this.signInURL + environment.firebaseConfig.apiKey, {
+      email: email,
+      password: password,
+      returnSecureToken: true,
+    });
   }
   logout() {
     this.user = null as any;
