@@ -43,6 +43,11 @@ export class ChatComponent implements OnInit {
         username: this.authService.user.displayName,
       })
       .subscribe((res) => {
+        this.chatService.getMessage(this.url).subscribe((resMessage: any) => {
+          this.chat = Object.keys(resMessage).map((key) => {
+            return resMessage[key];
+          });
+        });
         console.log(res);
       });
 
